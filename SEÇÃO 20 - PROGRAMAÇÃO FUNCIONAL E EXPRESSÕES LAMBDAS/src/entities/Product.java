@@ -33,14 +33,31 @@ public class Product {
 	 * public static boolean staticProductPredicate(Product p) { return p.getPrice()
 	 * >= 100; }
 	 */
+	
+	
 
-	public boolean nonStaticProductPredicate() {
+	/*public boolean nonStaticProductPredicate() {
 		return price >= 100;
+	}*/
+	
+	/*public static void priceUpdate(Product p) {
+		p.setPrice(p.getPrice() * 1.1);
+	}*/
+	/*public  void nonStaticpriceUpdate() {
+		price = price * 1.1;
+	}*/
+	
+	/*public static String staticUpperCaseName(Product p ) {
+		return p.getName().toUpperCase();
+	}*/
+	
+	public String nonStaticUpperCaseName() {
+		return name.toUpperCase();
 	}
 
 	@Override
 	public String toString() {
-		return "Product [name=" + name + ", price=" + price + "]";
+		return "Product [name=" + name + ", price=" + String.format("%.2f", price) + "]";
 	}
 
 }

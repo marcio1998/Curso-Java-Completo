@@ -4,7 +4,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 public class DB {
@@ -42,6 +44,29 @@ public class DB {
 			props.load(fs);// faz a leitura do arquivo e guarda os dados dentro do objeto properties.
 			return props;
 		} catch (IOException e) {
+			throw new DbException(e.getMessage());
+		}
+	}
+	
+	
+	public static void closeStatement(Statement sts) {
+		try {
+			if(sts != null) {
+				sts.close();
+			}
+			
+		}catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+	}
+	
+	public static void closeResultSet(ResultSet rs) {
+		try {
+			if(rs != null) {
+				rs.close();
+			}
+			
+		}catch(SQLException e) {
 			throw new DbException(e.getMessage());
 		}
 	}

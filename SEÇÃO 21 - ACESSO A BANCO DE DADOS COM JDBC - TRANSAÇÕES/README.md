@@ -7,7 +7,3 @@
 <li>acresentar a biblioteca no projeto java. </li>
 <li>criar arquivo db.properties</li>
 </ol>
-<h3>Padrão de projeto DAO (Data Access Object)</h3>
-<p>Para cada entidade, haverá um objeto responsável por fazer acesso a dados relacionados a esta entidade.</p>
-<p>Cada DAO será definido por uma interface.</p>
-<p>A injeção de dependência pode ser feita por meio do padrão de projeto Factory</p>

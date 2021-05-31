@@ -1,9 +1,7 @@
 package application;
 
-import java.sql.Connection;
-import java.util.Date;
+import java.util.List;
 
-import db.DB;
 import model.dao.DaoFactory;
 import model.dao.SellerDao;
 import model.entities.Department;
@@ -16,7 +14,10 @@ public class Program {
 		SellerDao sellerDao = DaoFactory.createSellerDao();
 		System.out.println("=== Test 1: FindById seller ===");
 		Seller seller = sellerDao.findById(3);
-		System.out.println(seller);
+		System.out.println("\n=== Test 2: FindByDepartment seller ===");
+		Department department = new Department(2, null);
+		List<Seller> list = sellerDao.findByDepartment(department);
+		list.forEach(System.out::println);
 
 	}
 

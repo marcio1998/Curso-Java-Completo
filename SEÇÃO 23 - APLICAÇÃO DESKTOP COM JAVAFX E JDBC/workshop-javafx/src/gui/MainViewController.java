@@ -64,8 +64,8 @@ public class MainViewController implements Initializable{
     }
     //synchronized garante que não seja interrompido durante o multi threading
     private synchronized <T>void loadView(String absolutName, Consumer<T> initializingAction){
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
         try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
             VBox newVbox = loader.load();
             Scene mainScene = Main.getMainScene();
             VBox mainVBox = (VBox)((ScrollPane)mainScene.getRoot()).getContent();

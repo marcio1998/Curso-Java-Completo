@@ -13,7 +13,9 @@ import gui.util.Utils;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,6 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.Department;
 import model.services.DepartmentService;
+import models.exceptions.ValidationException;
 
 /**
  *
@@ -32,7 +35,7 @@ public class DepartmentFormController implements Initializable {
 
     private Department entity;
     private DepartmentService service;
-    
+
     private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 
     @FXML
@@ -63,6 +66,8 @@ public class DepartmentFormController implements Initializable {
             service.saveOrupdate(entity);
             notifyDataChangeListeners();
             Utils.currentStage(event).close();
+        } catch (ValidationException e) {
+            setErrorMessages(e.getErros());
         } catch (DbException e) {
             Alerts.showAlert("Error saving object", null, e.getMessage(), Alert.AlertType.ERROR);
         }
@@ -70,7 +75,7 @@ public class DepartmentFormController implements Initializable {
 
     @FXML
     public void onBtCancelAction(ActionEvent event) {
-       Utils.currentStage(event).close();
+        Utils.currentStage(event).close();
     }
 
     @Override
@@ -85,8 +90,8 @@ public class DepartmentFormController implements Initializable {
     public void setDepartmentService(DepartmentService service) {
         this.service = service;
     }
-    
-    public void subscribeDatachangeListener(DataChangeListener listener){
+
+    public void subscribeDatachangeListener(DataChangeListener listener) {
         dataChangeListeners.add(listener);
     }
 
@@ -104,16 +109,31 @@ public class DepartmentFormController implements Initializable {
     }
 
     private Department getFormData() {
-        System.out.println("gui.DepartmentFormController.getFormData()");
         Department obj = new Department();
+        ValidationException exception = new ValidationException("validation error");
+
         obj.setId(Utils.tryPaerseToInt(txtId.getText()));
+        if (txtName.getText() == null || txtName.getText().trim().equals("")) {
+            exception.addError("name", "Field can't be empty");
+        }
         obj.setName(txtName.getText());
+
+        if (exception.getErros().size() > 0) {
+            throw exception;
+        }
         return obj;
     }
 
     private void notifyDataChangeListeners() {
-        for(DataChangeListener listener : dataChangeListeners){
+        for (DataChangeListener listener : dataChangeListeners) {
             listener.onDataChanged();
+        }
+    }
+
+    private void setErrorMessages(Map<String, String> error) {
+        Set<String> fields = error.keySet();
+        if (fields.contains("name")) {
+            labelErrorName.setText(error.get("name"));
         }
     }
 }

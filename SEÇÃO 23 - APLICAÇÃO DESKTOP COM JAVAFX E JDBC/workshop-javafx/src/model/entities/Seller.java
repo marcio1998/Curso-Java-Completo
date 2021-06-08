@@ -63,7 +63,7 @@ public class Seller implements Serializable{
 		return baseSalary;
 	}
 
-	public void setBaseSalary(double baseSalary) {
+	public void setBaseSalary(Double baseSalary) {
 		this.baseSalary = baseSalary;
 	}
 

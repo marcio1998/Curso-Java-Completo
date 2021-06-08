@@ -10,7 +10,7 @@ public class Seller implements Serializable{
 	private String name;
 	private String email;
 	private Date birthDate;
-	private double baseSalary;
+	private Double baseSalary;
 	private Department department;
 	
 	public Seller() {
@@ -59,7 +59,7 @@ public class Seller implements Serializable{
 		this.birthDate = birthDate;
 	}
 
-	public double getBaseSalary() {
+	public Double getBaseSalary() {
 		return baseSalary;
 	}
 
